@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib
-from matplotlib.patches import Polygon
 import matplotlib.pyplot as plt
 
 #
@@ -31,23 +30,26 @@ plt.show()
 
 file2 = '4171937.dat.fbeye'
  
-starttime, stoptime = np.loadtxt(file2, usecols=(5,6), unpack=True)
+peaktime, starttime, stoptime = np.loadtxt(file2, usecols=(3,4,5), unpack=True)
 
 plt.figure()
 plt.plot(time, flux, 'b') # plot the original data in blue
 plt.ylabel('Equivalent Duration (ergs maybe?)')
 plt.xlabel('Time (Days)')
-#plt.xlim(774, 786)
-#plt.ylim(13750,14000)
+plt.xlim(774, 786)
+plt.ylim(13750,14000)
 # now lets loop over every flare, find the data that falls within the start/stop times
+
 for k in range(0, len(starttime)):
     # this finds WHERE the logic statements are true for the k'th given flare
     x = np.where((time >= starttime[k]) & (time <= stoptime[k]))
 
     # now let's plot that flare
     plt.plot(time[x], flux[x], c='red')
+   
+   #Here I attempt to use similar syntax as above to try to highlight peak times
+for xc in peaktime:
+    plt.axvline(x=xc, alpha = .15, c='orange')
 
 plt.savefig('CT_W_flares.png', dpi=300 )
 plt.show()
-
-
