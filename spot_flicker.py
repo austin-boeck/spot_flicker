@@ -23,22 +23,31 @@ plt.xlim(774, 786)
 plt.ylim(13750,14000)
 plt.ylabel('Equivalent Duration (ergs maybe?)')
 plt.xlabel('Time (Days)')
+plt.savefig('CandidateTime.png', dpi=300 )
 plt.show()
-plt.savefig('CandidateTime' )
+
 
 #Here I attempt to do the same as above, but with flare durations highlighted
 
 file2 = '4171937.dat.fbeye'
  
-flaretimes = np.loadtxt(file2, usecols=(5,6))
+starttime, stoptime = np.loadtxt(file2, usecols=(5,6), unpack=True)
 
-#plt.figure()
-#plt.plot(time, flux, 'g')
-#plt.Polygon(flaretimes, closed=False , c = 'y')
+plt.figure()
+plt.plot(time, flux, 'b') # plot the original data in blue
+plt.ylabel('Equivalent Duration (ergs maybe?)')
+plt.xlabel('Time (Days)')
 #plt.xlim(774, 786)
 #plt.ylim(13750,14000)
-#plt.ylabel('Equivalent Duration (ergs maybe?)')
-#plt.xlabel('Time (Days)')
-#plt.show()
-#plt.savefig('CT_W_flares' )
+# now lets loop over every flare, find the data that falls within the start/stop times
+for k in range(0, len(starttime)):
+    # this finds WHERE the logic statements are true for the k'th given flare
+    x = np.where((time >= starttime[k]) & (time <= stoptime[k]))
+
+    # now let's plot that flare
+    plt.plot(time[x], flux[x], c='red')
+
+plt.savefig('CT_W_flares.png', dpi=300 )
+plt.show()
+
 
