@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import pandas as pd
 
 np.set_printoptions(threshold=np.nan)
 #
@@ -69,7 +70,6 @@ for i in range(0, len(starttime)):
    
    
 plt.figure()
-plt.plot(time, flux, 'b') 
 plt.ylabel('Equivalent Duration (ergs maybe?)')
 plt.xlabel('Time (Days)')
 plt.xlim(774, 786)
@@ -80,8 +80,12 @@ plt.savefig('CT_sans_flares.png', dpi=300)
 plt.show()
    
    
+'''
+This next section of code will attempt to smooth the curve
+via a rolling median window (Here we go...)
+'''
 
-   
+#data_median = pd.rolling_median(flux_sans, window = 3)
    
    
       
